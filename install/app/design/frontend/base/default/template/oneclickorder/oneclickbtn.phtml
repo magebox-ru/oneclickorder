@@ -1,0 +1,202 @@
+<?php
+/**
+ *
+ * This source file is subject to the Ecommerce Shift Software License, which is available at http://ecommerceshift.ru/common/license-commercial.txt.
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ *
+ * NOTICE OF LICENSE
+ *
+ * You may not sell, sub-license, rent or lease
+ * any portion of the Software or Documentation to anyone.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade to newer
+ * versions in the future.
+ *
+ * @category   Eshift
+ * @package    Eshift_Oneclickorder
+ * @copyright  Copyright (c) 2013 Ecommerce Shift (http://ecommerceshift.ru/)
+ * @contacts   support@ecommerceshift.ru
+ * @license    http://ecommerceshift.ru/common/license-commercial.txt
+ */
+?>
+
+<?php if ($this->helper('oneclickorder')->isEnabled() && $this->helper('escommon')->isUserEmailSet()): ?>
+<?php $btn_type = $this->helper('oneclickorder')->getBtnType(); ?>
+<div style="display:none;">
+   <div id="oneclickorder_btn">
+      <<?php echo $btn_type;?> title="<?php echo $this->helper('oneclickorder')->getBtnText() ?>" class="button btn-oneclickorder"  href="#oneClickOrderBlock"><span><span><?php echo $this->helper('oneclickorder')->getBtnText() ?></span></span></<?php echo $btn_type;?>>
+   </div>
+
+    <div id="oneClickOrderBlock">
+        <div id="resultOneClickOrder"></div>
+        <div id="oneClickOrderFormAjaxLoading"></div>
+        <div id="oneClickOrderFormWrapper">
+            <form action="<?php echo $this->getUrl('oneclickorder/index/post'); ?>" id="oneClickOrderForm" method="post">
+                <div class="fieldset">
+                    <h2 class="legend"><?php echo $this->helper('oneclickorder')->showFormTitle() ?></h2>
+                    <ul class="form-list">
+                        <?php if ($this->helper('oneclickorder')->isNameEnabled()): ?>
+                            <li>
+                                <div>
+                                    <label for="name" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Your Name') ?></label>
+                                    <div class="input-box">
+                                        <input name="name" id="name" title="<?php echo Mage::helper('oneclickorder')->__('Your Name') ?>" value="" class="input-text required-entry" type="text" maxlength="30" />
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+						<li class="opc-email">
+							<label for="email_addr" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Email') ?></label>
+							<div class="input-box">
+								<input name="email_addr" id="email_addr" title="<?php echo Mage::helper('oneclickorder')->__('Email') ?>" value="" class="input-text " type="text" maxlength="30"/>
+							</div>
+						</li>
+								
+                        <li>
+                            <label for="telephone" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Your Telephone') ?></label>
+                            <div class="input-box">
+                                <input name="telephone" id="telephone" title="<?php echo Mage::helper('oneclickorder')->__('Your Telephone') ?>" value="" class="input-text required-entry" type="text" maxlength="30"/>
+                            </div>
+                        </li>
+                        <?php if ($this->helper('oneclickorder')->isTimeEnabled()): ?>
+                            <li>
+                                <label for="time" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Time for backcall') ?></label>
+                                <div class="input-box">
+                                    <input name="time" id="time" title="<?php echo Mage::helper('oneclickorder')->__('Time for backcall') ?>" class="input-text required-entry" type="text" maxlength="30"/>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if ($this->helper('oneclickorder')->isAddressEnabled()): ?>
+                            <li>
+                                <label for="address" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Address') ?></label>
+                                <div class="input-box">
+                                    <input name="address" id="address" title="<?php echo Mage::helper('oneclickorder')->__('Address') ?>" class="input-text required-entry" type="text" maxlength="100"/>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if ($this->helper('oneclickorder')->isCommentEnabled()): ?>
+                            <li>
+                                <label for="comment"><?php echo Mage::helper('contacts')->__('Comment') ?></label>
+                                <div class="input-box">
+                                    <textarea name="comment" id="comment" title="<?php echo Mage::helper('contacts')->__('Comment') ?>" class="input-text" cols="5" rows="3" maxlength="200"></textarea>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+                    </ul>
+                </div>
+                <div class="buttons-set">
+                    <p class="required"><?php echo Mage::helper('oneclickorder')->__('* Required Fields') ?></p>
+                    <input name="lasturl" id="lasturl" value="" type="text" maxlength="256" style="display:none !important;" />
+
+                    <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+                    <button type="submit" title="<?php echo Mage::helper('oneclickorder')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('oneclickorder')->__('Submit') ?></span></span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<?php
+$oc_custom_css = $this->helper('oneclickorder')->getCustomCss();
+?>
+<style type="text/css">
+    #oneClickOrderBlock {position:relative;}
+    #oneClickOrderFormAjaxLoading {position:absolute; background: url('<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif')?>') 50% 50% no-repeat; width:100%; height:100%; display:none;}
+    #resultOneClickOrder {display:none;}
+	.opc-email {display: none;}
+    <?php    if ($oc_custom_css): ?>
+    <?php echo $oc_custom_css; ?>
+    <?php endif; ?>
+</style>
+    
+<script type="text/javascript">
+    //<![CDATA[
+
+    var oneClickOrderForm = new VarienForm('oneClickOrderForm', true);
+
+$es(document).ready(function() {
+
+    $es("#oneClickOrderBlock input#lasturl").val(document.URL);
+	$es("#oneClickOrderBlock .opc-email input").val("<?php echo base64_encode($this->helper('oneclickorder')->getFormAntispam()) ?>");
+	
+    <?php
+    $ocAutosize = 'true';
+    if ($this->helper('oneclickorder')->getPopupWidth() && $this->helper('oneclickorder')->getPopupHeight()) $ocAutosize = 'false';
+    ?>
+    $es(".btn-oneclickorder").fancybox({
+        type : 'inline',
+        autoSize : <?php echo $ocAutosize ?>,
+        helpers : {
+            title : null
+        }
+        <?php if ($ocAutosize == 'false'): ?>
+        ,width : <?php echo $this->helper('oneclickorder')->getPopupWidth() ?>
+        ,height : <?php echo $this->helper('oneclickorder')->getPopupHeight() ?>
+        <?php endif; ?>
+    });
+
+    $es('#oneClickOrderForm').submit(function(e) {
+        if (oneClickOrderForm.validator.validate()) {
+            $es('#oneClickOrderFormWrapper').css('opacity',0.3);
+            $es('#oneClickOrderFormAjaxLoading').fadeIn();
+
+            var postData = $es(this).serialize();
+            var formURL = $es(this).attr("action");
+            $es.post(
+                formURL,
+                postData,
+                function( data ) {
+                    $es( '#resultOneClickOrder' ).html( data.message );
+                    $es('#oneClickOrderFormAjaxLoading').fadeOut(400, function() {
+                        $es('#oneClickOrderFormWrapper').slideUp(400, function() {
+                            $es( '#resultOneClickOrder').slideDown();
+                            $es.fancybox.update();
+                        });
+                    });
+                },
+                'json'
+            );
+            e.preventDefault();
+        }
+    });
+
+<?php if ($this->helper('oneclickorder')->isInsertManually()):
+$css_selector = $this->helper('oneclickorder')->isInsertManually();
+?>	
+if (($es('<?php echo $css_selector ?>').length > 0))  {
+   $es('#oneclickorder_btn').clone(true).appendTo($es('<?php echo $css_selector ?>'));
+      };
+<?php endif; ?>
+
+<?php if ($this->helper('oneclickorder')->isInsertCart()):?>	
+if (!($es('.header .btn-oneclickorder').length > 0))  {
+   $es('#oneclickorder_btn').clone(true).appendTo($es('.add-to-cart'));
+      };
+<?php endif; ?>
+
+<?php if ($this->helper('oneclickorder')->isInsertLeft()):?>	
+if (!($es('.col-left.sidebar .btn-oneclickorder').length > 0))  {
+   $es('#oneclickorder_btn').clone(true).addClass('oc_left').prependTo($es('.col-left.sidebar'));
+      };
+<?php endif; ?>
+
+<?php if ($this->helper('oneclickorder')->isInsertRight()):?>	
+if (!($es('.col-right.sidebar .btn-oneclickorder').length > 0))  {
+   $es('#oneclickorder_btn').clone(true).addClass('oc_right').prependTo($es('.col-right.sidebar'));
+      };
+<?php endif; ?>
+
+});
+    //]]>
+</script>
+<?php
+endif;
+?>
+
+

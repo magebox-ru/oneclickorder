@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * This source file is subject to the Ecommerce Shift Software License, which is available at http://ecommerceshift.ru/common/license-commercial.txt.
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ *
+ * NOTICE OF LICENSE
+ *
+ * You may not sell, sub-license, rent or lease
+ * any portion of the Software or Documentation to anyone.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade to newer
+ * versions in the future.
+ *
+ * @category   Eshift
+ * @package    Eshift_Oneclickorder
+ * @copyright  Copyright (c) 2013 Ecommerce Shift (http://ecommerceshift.ru/)
+ * @contacts   support@ecommerceshift.ru
+ * @license    http://ecommerceshift.ru/common/license-commercial.txt
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <jquery translate="title" module="oneclickorder">
+                                        <title>jQuery</title>
+                                    </jquery>
+                                    <oneclickorder translate="title" module="oneclickorder">
+                                        <title>Oneclickorder Section</title>
+                                    </oneclickorder>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

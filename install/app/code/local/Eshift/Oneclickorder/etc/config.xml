@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * This source file is subject to the Ecommerce Shift Software License, which is available at http://ecommerceshift.ru/common/license-commercial.txt.
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ *
+ * NOTICE OF LICENSE
+ *
+ * You may not sell, sub-license, rent or lease
+ * any portion of the Software or Documentation to anyone.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade to newer
+ * versions in the future.
+ *
+ * @category   Eshift
+ * @package    Eshift_Oneclickorder
+ * @copyright  Copyright (c) 2013 Ecommerce Shift (http://ecommerceshift.ru/)
+ * @contacts   support@ecommerceshift.ru
+ * @license    http://ecommerceshift.ru/common/license-commercial.txt
+ */
+-->
+<config>
+    <modules>
+        <Eshift_Oneclickorder>
+            <version>1.0.0</version>
+        </Eshift_Oneclickorder>
+    </modules>
+    <frontend>
+        <routers>
+            <oneclickorder>
+                <use>standard</use>
+                <args>
+                    <module>Eshift_Oneclickorder</module>
+                    <frontName>oneclickorder</frontName>
+                </args>
+            </oneclickorder>
+        </routers>
+        <translate>
+            <modules>
+                <Eshift_Oneclickorder>
+                    <files>
+                        <default>Eshift_Oneclickorder.csv</default>
+                    </files>
+                </Eshift_Oneclickorder>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <oneclickorder>
+                    <file>oneclickorder.xml</file>
+                </oneclickorder>
+            </updates>
+        </layout>
+    </frontend>
+    <global>
+
+        <blocks>
+            <oneclickorder>
+                <class>Eshift_Oneclickorder_Block</class>
+            </oneclickorder>
+        </blocks>
+        <helpers>
+            <oneclickorder>
+                <class>Eshift_Oneclickorder_Helper</class>
+            </oneclickorder>
+        </helpers>
+
+        <models>
+            <oneclickorder>
+                <class>Eshift_Oneclickorder_Model</class>
+            </oneclickorder>
+        </models>
+
+        <template>
+            <email>
+                <oneclickorder_email_email_template translate="label" module="oneclickorder">
+                    <label>Oneclickorder Form</label>
+                    <file>oneclickorder_form.html</file>
+                    <type>text</type>
+                </oneclickorder_email_email_template>
+            </email>
+        </template>
+
+    </global>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <Eshift_Oneclickorder>
+                    <files>
+                        <default>Eshift_Oneclickorder.csv</default>
+                    </files>
+                </Eshift_Oneclickorder>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <default>
+        <oneclickorder>
+            <oneclickorder>
+                <enabled>1</enabled>
+            </oneclickorder>
+            <button>
+                <btn_type>a</btn_type>
+                <btn_text>Купить в 1 Клик</btn_text>
+                <btn_custom_css><![CDATA[#oneclickorder_btn {margin: 0px 0 0px 2px;
+float: right;}
+#oneclickorder_btn a {text-decoration: none; border-bottom:1px dashed; margin: 0 0 0 10px;}]]></btn_custom_css>
+                <btn_cart_position>1</btn_cart_position>
+            </button>
+            <form>
+                <title>Купить в 1 Клик</title>
+                <name_enabled>1</name_enabled>
+                <name_enabled>1</name_enabled>
+                <success_message>Спасибо, ваша заявка получена. В ближайшее время менеджер свяжется с вами.</success_message>
+                <fail_message>Невозможно отправить ваш запрос. Пожалуйста, повторите попытку позже.</fail_message>
+				<antispam>spamtest</antispam>
+            </form>
+            <email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>general</sender_email_identity>
+                <email_template>oneclickorder_email_email_template</email_template>
+            </email>
+            <smsnotification>
+                <enabled>0</enabled>
+                <sms_header>Заказ в 1 Клик:</sms_header>
+            </smsnotification>
+        </oneclickorder>
+        <escommon>
+            <jquery>
+                <fancybox13>1</fancybox13>
+            </jquery>
+        </escommon>
+    </default>
+</config>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Eshift_Oneclickorder>
+            <active>true</active>
+            <codePool>local</codePool>
+            <version>1.0.0</version>
+            <depends>
+                <Eshift_Escommon/>
+            </depends>
+        </Eshift_Oneclickorder>
+    </modules>
+</config>

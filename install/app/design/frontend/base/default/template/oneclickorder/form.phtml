@@ -1,0 +1,99 @@
+<?php
+/**
+ *
+ * This source file is subject to the Ecommerce Shift Software License, which is available at http://ecommerceshift.ru/common/license-commercial.txt.
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ *
+ * NOTICE OF LICENSE
+ *
+ * You may not sell, sub-license, rent or lease
+ * any portion of the Software or Documentation to anyone.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade to newer
+ * versions in the future.
+ *
+ * @category   Eshift
+ * @package    Eshift_Oneclickorder
+ * @copyright  Copyright (c) 2013 Ecommerce Shift (http://ecommerceshift.ru/)
+ * @contacts   support@ecommerceshift.ru
+ * @license    http://ecommerceshift.ru/common/license-commercial.txt
+ */
+?>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<?php /*
+<div class="page-title">
+    <h1><?php echo Mage::helper('oneclickorder')->__('Backcall Us') ?></h1>
+</div>
+*/
+?>
+<form action="<?php echo $this->getFormAction(); ?>" id="backcallForm" method="post">
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->helper('oneclickorder')->showFormTitle() ?></h2>
+        <ul class="form-list">
+        
+            <?php if ($this->helper('oneclickorder')->isNameEnabled()): ?>
+            <li>
+                <div>
+                    <label for="name" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Your Name') ?></label>
+                    <div class="input-box">
+                        <input name="name" id="name" title="<?php echo Mage::helper('oneclickorder')->__('Your Name') ?>" value="<?php echo $this->htmlEscape($this->helper('oneclickorder')->getUserName()) ?>" class="input-text required-entry" type="text" maxlength="30" />
+                    </div>
+                </div>  
+            </li>
+            <?php endif; ?>
+            
+            <li>
+                <label for="telephone" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Your Telephone') ?></label>
+                <div class="input-box">
+                    <input name="telephone" id="telephone" title="<?php echo Mage::helper('oneclickorder')->__('Your Telephone') ?>" value="" class="input-text required-entry" type="text" maxlength="30"/>
+                </div>
+            </li>
+            <?php if ($this->helper('oneclickorder')->isTimeEnabled()): ?>
+            <li>
+                <label for="time" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Time for backcall') ?></label>
+                <div class="input-box">
+                    <input name="time" id="time" title="<?php echo Mage::helper('oneclickorder')->__('Time for backcall') ?>" class="input-text required-entry" type="text" maxlength="30"/>
+                </div>
+            </li>
+            <?php endif; ?>
+            
+            <?php if ($this->helper('oneclickorder')->isAddressEnabled()): ?>
+            <li>
+                <label for="address" class="required"><em>*</em><?php echo Mage::helper('oneclickorder')->__('Address') ?></label>
+                <div class="input-box">
+                    <input name="address" id="address" title="<?php echo Mage::helper('oneclickorder')->__('Address') ?>" class="input-text required-entry" type="text" maxlength="100"/>
+                </div>
+            </li>
+            <?php endif; ?>
+            
+            <?php if ($this->helper('oneclickorder')->isCommentEnabled()): ?>
+            <li>
+                <label for="comment"><?php echo Mage::helper('contacts')->__('Comment') ?></label>
+                <div class="input-box">
+                    <textarea name="comment" id="comment" title="<?php echo Mage::helper('contacts')->__('Comment') ?>" class="input-text" cols="5" rows="3" maxlength="200"></textarea>
+                </div>
+            </li>
+            <?php endif; ?>
+            
+        </ul>
+    </div>
+    <div class="buttons-set">
+        <p class="required"><?php echo Mage::helper('oneclickorder')->__('* Required Fields') ?></p>
+        <input name="lasturl" id="lasturl" value="" type="text" maxlength="256" style="display:none !important;" />
+        
+        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+        <button type="submit" title="<?php echo Mage::helper('oneclickorder')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('oneclickorder')->__('Submit') ?></span></span></button>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var backcallForm = new VarienForm('backcallForm', true);
+//]]>
+
+$es(document).ready(function() {
+    $es("input#lasturl").val(document.referrer);
+});
+
+</script>
